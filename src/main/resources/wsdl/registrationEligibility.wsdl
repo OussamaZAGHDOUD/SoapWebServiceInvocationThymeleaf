@@ -1,0 +1,103 @@
+<wsdl:definitions
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:sch="http://www.oussama.com/registrationEligibility"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.oussama.com/registrationEligibility"
+	targetNamespace="http://www.oussama.com/registrationEligibility">
+	<wsdl:types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.oussama.com/registrationEligibility">
+			<!-- Request Object : from the client -->
+			<xsd:element name="StudentRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="studentName" type="xsd:string" />
+						<xsd:element name="age" type="xsd:int" />
+						<xsd:element name="graduationScore">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:double">
+									<xsd:minInclusive value="0" />
+									<xsd:maxInclusive value="20" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="numberOfCertifications"
+							type="xsd:positiveInteger" />
+						<xsd:element name="javaLastYearScore">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:double">
+									<xsd:minInclusive value="0" />
+									<xsd:maxInclusive value="20" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<!-- Request Object : to the client -->
+			<xsd:element name="wsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="isEligible" type="xsd:boolean" />
+						<xsd:element name="scoreOfApplicant">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:double">
+									<xsd:minInclusive value="0" />
+									<xsd:maxInclusive value="20" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element maxOccurs="unbounded"
+							name="criteriaMismatch" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="StudentRequest">
+		<wsdl:part element="tns:StudentRequest"
+			name="StudentRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="wsResponse">
+		<wsdl:part element="tns:wsResponse" name="wsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="registrationEligebiltyIndicator">
+		<wsdl:operation name="Student">
+			<wsdl:input message="tns:StudentRequest"
+				name="StudentRequest">
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="ws">
+			<wsdl:output message="tns:wsResponse" name="wsResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="registrationEligebiltyIndicatorSoap11"
+		type="tns:registrationEligebiltyIndicator">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="Student">
+			<soap:operation soapAction="" />
+			<wsdl:input name="StudentRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="ws">
+			<soap:operation soapAction="" />
+			<wsdl:output name="wsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service
+		name="registrationEligebiltyIndicatorService">
+		<wsdl:port
+			binding="tns:registrationEligebiltyIndicatorSoap11"
+			name="registrationEligebiltyIndicatorSoap11">
+			<soap:address location="http://localhost:9090/ws" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
