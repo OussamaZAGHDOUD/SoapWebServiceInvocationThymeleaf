@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Check Student Eligebilty</title>
+<style type="text/css">
+	label {
+        display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+    }
+    input[type=text], input[type=password], input[type=number], input[type=range], select {
+        display: inline-block;
+        width: 200px;
+    }
+    input[type=radio] {
+        margin-left: 45px;
+    }
+    input[type=checkbox] {
+        margin-right: 190px;
+    }  
+    button {
+        padding: 5px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div align="center">
+	<h2> Check Student Form</h2>
+	<form action="#" th:action="@{/check/student}" method="post" th:object="${request}">
+		<label> Student name : </label>
+		<input type="text" th:field="*{studentName}" /><br/>
+		
+		<label> Age : </label>
+		<input type="number" min=18 max=90 th:field="*{age}" /><br/>
+		
+		<label> Graduation score : </label>
+		<input type="number" min=0 max=20 th:field="*{graduationScore}" /><br/>
+		
+		<label> Java last year score : </label>
+		<input type="number" min=0 max=20 th:field="*{javaLastYearScore}" /><br/>
+		
+		<label> Number of certifications : </label>
+		<input type="range" min=1 max=10 th:field="*{numberOfCertifications}" /><br/>
+		
+		
+		<button type="submit"> Check </button>
+	
+	</form>
+</div>
+
+</body>
+</html>
